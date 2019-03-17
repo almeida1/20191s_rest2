@@ -28,25 +28,49 @@ public class LivroController {
 	}
 
 	@RequestMapping(value = "/livros")
-	public ResponseEntity<Object> getLivro() {
+	public ResponseEntity<Object> getTodos() {
 		return new ResponseEntity<>(livroRepo.values(), HttpStatus.OK);
 	}
 
-	
 	@RequestMapping(value = "/livros", method = RequestMethod.POST)
-	public ResponseEntity<Object> createProduct(@RequestBody Livro livro) {
+	public ResponseEntity<Object> cadastraLivro(@RequestBody Livro livro) {
 		if (livroRepo.get(livro.getIsbn()) != null) {
-			return new ResponseEntity<>("Livro já cadastrado", HttpStatus.CREATED);
+			return new ResponseEntity<>("Livro já cadastrado", HttpStatus.FOUND);
 		} else {
 			livroRepo.put(livro.getIsbn(), livro);
 			return new ResponseEntity<>("Livro incluido com sucesso", HttpStatus.CREATED);
 
 		}
 	}
-	@RequestMapping(value = "/livros{id}", method = RequestMethod.PUT)
-	   public ResponseEntity<Object> updateProduct(@PathVariable("id") String id, @RequestBody Livro livro) { 
-	      livroRepo.remove(id);
-	      livroRepo.put(livro.getIsbn(), livro);
-	      return new ResponseEntity<>("Livro atualizado com sucesso", HttpStatus.OK);
-	   }   
+
+	@RequestMapping(value = "/livros/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Object> atualizaLivro(@PathVariable("id") String id, @RequestBody Livro livro) {
+		livroRepo.remove(id);
+		livroRepo.put(livro.getIsbn(), livro);
+		return new ResponseEntity<>("Livro atualizado com sucesso", HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/livros/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Object> consultaLivro(@PathVariable("id") String id) {
+		Livro livro = livroRepo.get(id);
+		if (livro != null) 
+		 return new ResponseEntity<>(livro, HttpStatus.OK);
+		else
+		 return new ResponseEntity<>("Livro não encontrado", HttpStatus.NOT_FOUND);
+	}
+	/**
+	 * Exclui o registro
+	 * @param id String isbn do livro
+	 * @return ok ou not found
+	 */
+	@RequestMapping(value = "/livros/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Object> excluirLivro(@PathVariable("id") String id) {
+		Livro livro = livroRepo.get(id);
+		if (livro != null) {
+			livroRepo.remove(id);
+			return new ResponseEntity<>("Livro excluido", HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<>("Livro não encontrado", HttpStatus.NOT_FOUND);
+	}
 }
