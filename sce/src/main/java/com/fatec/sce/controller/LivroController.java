@@ -27,7 +27,7 @@ public class LivroController {
 
 	}
 
-	@RequestMapping(value = "/livros")
+	@RequestMapping(value = "/livros", method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<Object> getTodos() {
 		return new ResponseEntity<>(livroRepo.values(), HttpStatus.OK);
 	}
