@@ -31,25 +31,21 @@ public class LivroController {
 	public ResponseEntity<Object> getTodos() {
 		return new ResponseEntity<>(livroRepo.values(), HttpStatus.OK);
 	}
-
 	@RequestMapping(value = "/livros", method = RequestMethod.POST)
 	public ResponseEntity<Object> cadastraLivro(@RequestBody Livro livro) {
 		if (livroRepo.get(livro.getIsbn()) != null) {
-			return new ResponseEntity<>("Livro já cadastrado", HttpStatus.FOUND);
+			return new ResponseEntity<>("Livro já cadastrado", HttpStatus.FOUND); //codigo 405 entrada invalida??
 		} else {
 			livroRepo.put(livro.getIsbn(), livro);
 			return new ResponseEntity<>("Livro incluido com sucesso", HttpStatus.CREATED);
-
 		}
 	}
-
 	@RequestMapping(value = "/livros/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Object> atualizaLivro(@PathVariable("id") String id, @RequestBody Livro livro) {
 		livroRepo.remove(id);
 		livroRepo.put(livro.getIsbn(), livro);
 		return new ResponseEntity<>("Livro atualizado com sucesso", HttpStatus.OK);
 	}
-	
 	@RequestMapping(value = "/livros/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Object> consultaLivro(@PathVariable("id") String id) {
 		Livro livro = livroRepo.get(id);
