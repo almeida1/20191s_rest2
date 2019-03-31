@@ -34,15 +34,15 @@ public class LivroController {
 	@RequestMapping(value = "/livros", method = RequestMethod.POST)
 	public ResponseEntity<Object> cadastraLivro(@RequestBody Livro livro) {
 		if (livroRepo.get(livro.getIsbn()) != null) {
-			return new ResponseEntity<>("Livro já cadastrado", HttpStatus.FOUND); //codigo 405 entrada invalida??
+			return new ResponseEntity<>("Livro já cadastrado", HttpStatus.BAD_REQUEST); //(400)
 		} else {
 			livroRepo.put(livro.getIsbn(), livro);
 			return new ResponseEntity<>("Livro incluido com sucesso", HttpStatus.CREATED);
 		}
 	}
-	@RequestMapping(value = "/livros/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> atualizaLivro(@PathVariable("id") String id, @RequestBody Livro livro) {
-		livroRepo.remove(id);
+	@RequestMapping(value = "/livros", method = RequestMethod.PUT)
+	public ResponseEntity<Object> atualizaLivro(@RequestBody Livro livro) {
+		livroRepo.remove(livro.getIsbn());
 		livroRepo.put(livro.getIsbn(), livro);
 		return new ResponseEntity<>("Livro atualizado com sucesso", HttpStatus.OK);
 	}
