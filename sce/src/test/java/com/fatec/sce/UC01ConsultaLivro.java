@@ -16,6 +16,7 @@ public class UC01ConsultaLivro extends AbstractTest {
 	@Test
 	public void getProductsList() throws Exception {
 	   String uri = "/livros";
+	   setUp();
 	   MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
 	      .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 	   
