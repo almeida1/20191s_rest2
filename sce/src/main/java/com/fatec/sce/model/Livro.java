@@ -10,6 +10,9 @@ public class Livro {
 	private String titulo;
 	private String autor;
 
+	public Livro() {
+		
+	}
 	
 	public Livro(String isbn, String titulo, String autor) {
 		super();
