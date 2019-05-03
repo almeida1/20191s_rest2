@@ -30,7 +30,7 @@ public class UC02ConsultarLivro_v2 {
 	HttpHeaders headers = new HttpHeaders();
 
 	@Test
-	public void testRetrieveStudentCourse() {
+	public void ct01consultaLivro() {
 
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
