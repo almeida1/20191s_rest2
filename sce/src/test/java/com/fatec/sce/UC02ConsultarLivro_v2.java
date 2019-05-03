@@ -7,7 +7,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
 
@@ -19,11 +18,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class UC03ConsultaLivro {
+public class UC02ConsultarLivro_v2 {
 
 	@org.springframework.boot.web.server.LocalServerPort
 	private int port;
@@ -37,9 +34,8 @@ public class UC03ConsultaLivro {
 
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
-		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/livros"),
-				HttpMethod.GET, entity, String.class);
+		ResponseEntity<String> response = restTemplate.exchange(createURLWithPort("/livros"), HttpMethod.GET, entity,
+				String.class);
 
 		String expected = "[{\"isbn\":\"1111\",\"titulo\":\"Engenharia de Software\",\"autor\":\"Pressman\"},{\"isbn\":\"2222\",\"titulo\":\"Engenharia de Software\",\"autor\":\"Sommerville\"},{\"isbn\":\"3333\",\"titulo\":\"Testes de Software\",\"autor\":\"Delamaro\"}]";
 		System.out.println(response.getBody());
